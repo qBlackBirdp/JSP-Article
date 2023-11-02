@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.koreaIT.example.JAM.exception.SQLErrorException;
+import com.BB.example.JAM.exception.SQLErrorException;
 
 public class DBUtil {
 	public static Map<String, Object> selectRow(Connection dbConn, SecSql sql) {
