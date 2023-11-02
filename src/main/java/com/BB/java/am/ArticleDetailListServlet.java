@@ -16,11 +16,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/article/detail")
+@WebServlet("/article/detail") // url매핑
 public class ArticleDetailListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		int id = Integer.parseInt(request.getParameter("id"));
+		
 		Connection conn = null;
 
 		try {
@@ -30,13 +33,13 @@ public class ArticleDetailListServlet extends HttpServlet {
 
 			SecSql sql = new SecSql();
 			sql.append("SELECT * FROM article");
-			sql.append("ORDER BY id DESC");
+			sql.append("WHERE id = ?", id);
 			
-			List<Map<String, Object>> articleListMap = DBUtil.selectRows(conn, sql);
+			Map<String, Object> articleMap = DBUtil.selectRow(conn, sql);
 			
-			request.setAttribute("articleListMap", articleListMap);
+			request.setAttribute("articleMap", articleMap);
 			
-			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
+			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("드라이버 로딩 실패");
